@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Showcase</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+       body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        .team-container {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .team-member:hover {
+            transform: scale(1.05);
+        }
+
+        .team-member img {
+            max-width: 100%;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            color: #007bff;
+        }
+
+        .rank {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            margin: 0 5px;
+            color: #007bff;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .social-icons a:hover {
+            color: #0056b3;
+        }
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container team-container">
+    <h1 class="text-center mb-4">Meet Our Team</h1>
+
+    <div class="row" id="teamMembers">
+        <!-- Team members will be dynamically added here using JavaScript -->
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addMemberModal">Add Team Member</button>
+            <button class="btn btn-secondary" onclick="printPage()">Print Page</button>
+        </div>
+    </div>
+</div>
+
+<!-- Add Team Member Modal -->
+<div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addMemberModalLabel">Add Team Member</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addMemberForm">
+                    <div class="form-group">
+                        <label for="memberName">Name:</label>
+                        <input type="text" class="form-control" id="memberName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberRank">Rank:</label>
+                        <input type="text" class="form-control" id="memberRank" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberImage">Image URL:</label>
+                        <input type="text" class="form-control" id="memberImage" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberFacebook">Facebook ID:</label>
+                        <input type="text" class="form-control" id="memberFacebook">
+                    </div>
+                    <div class="form-group">
+                        <label for="memberInstagram">Instagram ID:</label>
+                        <input type="text" class="form-control" id="memberInstagram">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="addTeamMember()">Add Member</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="text-center">
+    <p>&copy; 2023 MD Saiful Islam | Email: <a href="mailto:2002047@icte.bdu.ac.bd">2002047@icte.bdu.ac.bd</a></p>
+</footer>
+
+<!-- Bootstrap and Font Awesome scripts -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/your-font-awesome-kit-code.js" crossorigin="anonymous"></script>
+<script>
+    function printPage() {
+        window.print();
+    }
+
+    function addTeamMember() {
+        const name = document.getElementById('memberName').value;
+        const rank = document.getElementById('memberRank').value;
+        const image = document.getElementById('memberImage').value;
+        const facebook = document.getElementById('memberFacebook').value;
+        const instagram = document.getElementById('memberInstagram').value;
+
+        const teamMembersContainer = document.getElementById('teamMembers');
+
+        const memberCard = document.createElement('div');
+        memberCard.classList.add('col-md-4', 'team-member');
+        memberCard.innerHTML = `
+            <img src="${image}" alt="${name}">
+            <h3>${name}</h3>
+            <p class="rank">${rank}</p>
+            <div class="social-icons">
+                ${facebook ? `<a href="${facebook}" target="_blank"><i class="fab fa-facebook"></i></a>` : ''}
+                ${instagram ? `<a href="${instagram}" target="_blank"><i class="fab fa-instagram"></i></a>` : ''}
+            </div>
+        `;
+
+        teamMembersContainer.appendChild(memberCard);
+
+        // Clear form fields after adding a team member
+        document.getElementById('addMemberForm').reset();
+        // Close the modal
+        $('#addMemberModal').modal('hide');
+    }
+</script>
+
+</body>
+</html>
